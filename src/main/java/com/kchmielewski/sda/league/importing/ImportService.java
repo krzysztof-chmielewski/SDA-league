@@ -28,13 +28,16 @@ public class ImportService {
             if (files != null) {
                 Stream.of(files).forEach(f -> {
                     try {
-                        teams.putIfAbsent(f.getName(), new TeamImport(f).team());
+                        TeamImport teamImport = new TeamImport(f);
+                        teams.putIfAbsent(teamImport.team().name(), teamImport.team());
                         Files.move(f, new File(processedDirectory + "/" + f.getName()));
+                        System.out.println("Loaded team " + teamImport.team());
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (Exception e) {
                         try {
                             Files.move(f, new File(errorDirectory + "/" + f.getName()));
+                            System.out.println("Could not load team " + f.getName());
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
