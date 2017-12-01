@@ -1,5 +1,6 @@
-package com.kchmielewski.sda.league.file;
+package com.kchmielewski.sda.league.importing;
 
+import com.kchmielewski.sda.league.importing.TeamImport;
 import com.kchmielewski.sda.league.model.Player;
 import org.junit.Test;
 

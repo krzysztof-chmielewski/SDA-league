@@ -1,4 +1,4 @@
-package com.kchmielewski.sda.league.file;
+package com.kchmielewski.sda.league.importing;
 
 import com.google.common.io.Files;
 import com.kchmielewski.sda.league.model.Player;
