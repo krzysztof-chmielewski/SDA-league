@@ -2,16 +2,15 @@ package com.kchmielewski.sda.league.importing;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 
-@RunWith(BlockJUnit4ClassRunner.class)
+@Ignore
 public class ImportServiceTest {
     private final String directoryName = "src/test/resources/import/";
     private final String fileSuffix = "_COPY";
@@ -38,7 +37,7 @@ public class ImportServiceTest {
         File[] files = directory.listFiles();
         if (files != null) {
             Stream.of(files).forEach(f -> {
-                if (!f.delete()){
+                if (!f.delete()) {
                     System.out.println("Could not delete " + f);
                 }
             });
@@ -54,7 +53,7 @@ public class ImportServiceTest {
             Stream.of(files).filter(f -> f.getName().endsWith(fileSuffix)).forEach(f -> {
                 try {
                     Files.copy(f.toPath(), new File(directoryName + f.getName().replace(fileSuffix, "")).toPath());
-                    if (!f.delete()){
+                    if (!f.delete()) {
                         System.out.println("Could not delete " + f);
                     }
                 } catch (IOException e) {
