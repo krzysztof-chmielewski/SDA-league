@@ -14,9 +14,11 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ImportService {
+    private final String prefix = "team";
     private final Map<String, Team> teams = new ConcurrentHashMap<>();
 
-    public ImportService(ScheduledExecutorService service, String importDirectory, String processedDirectory, String errorDirectory, int delay) {
+    public ImportService(ScheduledExecutorService service, String importDirectory, String processedDirectory, String
+            errorDirectory, int delay) {
         checkNotNull(importDirectory);
         checkNotNull(processedDirectory);
         checkNotNull(errorDirectory);
@@ -25,7 +27,7 @@ public class ImportService {
             File directory = new File(importDirectory);
             File[] files = directory.listFiles();
             if (files != null) {
-                Stream.of(files).forEach(f -> {
+                Stream.of(files).filter(f -> f.getName().startsWith(prefix)).forEach(f -> {
                     try {
                         TeamImport teamImport = new TeamImport(f);
                         teams.putIfAbsent(teamImport.team().name(), teamImport.team());

@@ -15,7 +15,10 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DisplayService {
-    public DisplayService(ScheduledExecutorService service, ImportService importService, String displayDirectory, int delay) {
+    private final String prefix = "display";
+
+    public DisplayService(ScheduledExecutorService service, ImportService importService, String displayDirectory,
+                          String processedDirectory, String errorDirectory, int delay) {
         checkNotNull(importService);
         checkNotNull(displayDirectory);
 
@@ -23,25 +26,27 @@ public class DisplayService {
             File directory = new File(displayDirectory);
             File[] files = directory.listFiles();
             if (files != null) {
-                Stream.of(files).forEach(f -> {
+                Stream.of(files).filter(f -> f.getName().startsWith(prefix)).forEach(f -> {
                     try {
                         List<String> lines = Files.readLines(f, Charset.defaultCharset());
                         lines.forEach(l -> {
-                            if (!importService.teams().containsKey(l)) {
-                                System.out.println("Team " + l + " does not exist");
-                            } else {
-                                Team team = importService.teams().get(l);
-                                System.out.println(team);
-                                System.out.println(team.players());
+                            try {
+                                if (!importService.teams().containsKey(l)) {
+                                    System.out.println("Team " + l + " does not exist");
+                                    Files.move(f, new File(errorDirectory + "/" + f.getName()));
+                                } else {
+                                    Team team = importService.teams().get(l);
+                                    Files.move(f, new File(processedDirectory + "/" + f.getName()));
+                                    System.out.println(team);
+                                    System.out.println(team.players());
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         });
-                        if (!f.delete()) {
-                            System.out.println("There was problem deleting " + f);
-                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 });
             }
         };

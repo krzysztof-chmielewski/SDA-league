@@ -21,7 +21,8 @@ public class TeamImportTest {
 
     @Test
     public void forEmptyFileThrowsException() throws Exception {
-        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/emptyTeamFile.txt")).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamEmptyTeamFile.txt")).isInstanceOf
+                (IllegalStateException.class);
     }
 
     @Test
@@ -32,12 +33,14 @@ public class TeamImportTest {
 
     @Test
     public void forTeamWithPlayerDataContainingLessThan2PartsThrowsException() throws Exception {
-        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamWithPlayerDataWithLessThan2Parts.txt")).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamWithPlayerDataWithLessThan2Parts.txt")
+        ).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     public void forTeamWithPlayerDataContainingMoreThan2PartsThrowsException() throws Exception {
-        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamWithPlayerDataWithMoreThan2Parts.txt")).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamWithPlayerDataWithMoreThan2Parts.txt")
+        ).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
