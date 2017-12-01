@@ -21,6 +21,10 @@ public class TeamImport {
         team = readFile(new File(checkNotNull(fileName, "File name cannot be null")));
     }
 
+    TeamImport(File file) throws IOException {
+        team = readFile(checkNotNull(file, "File cannot be null"));
+    }
+
     private Team readFile(File file) throws IOException {
         List<String> lines = Files.readLines(file, Charset.defaultCharset());
         checkState(lines.size() > 0, "Team file must contain at least one line");

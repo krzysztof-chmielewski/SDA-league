@@ -1,8 +1,9 @@
 package com.kchmielewski.sda.league.importing;
 
-import com.kchmielewski.sda.league.importing.TeamImport;
 import com.kchmielewski.sda.league.model.Player;
 import org.junit.Test;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -10,7 +11,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class TeamImportTest {
     @Test
     public void forNullFileNameThrowsException() throws Exception {
-        assertThatThrownBy(() -> new TeamImport(null)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> new TeamImport((String) null)).isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    public void forNullFileThrowsException() throws Exception {
+        assertThatThrownBy(() -> new TeamImport((File) null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test
