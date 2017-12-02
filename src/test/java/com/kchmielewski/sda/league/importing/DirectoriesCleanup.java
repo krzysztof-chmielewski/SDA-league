@@ -1,10 +1,13 @@
 package com.kchmielewski.sda.league.importing;
 
+import com.google.common.io.Files;
 import org.junit.After;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.stream.Stream;
 
 public abstract class DirectoriesCleanup {
@@ -26,5 +29,31 @@ public abstract class DirectoriesCleanup {
                 });
             }
         }
+    }
+
+    String getImportDirectory() {
+        return importDirectory;
+    }
+
+    String getProcessedDirectory() {
+        return processedDirectory;
+    }
+
+    String getErrorDirectory() {
+        return errorDirectory;
+    }
+
+    void copyFile(String fileName) {
+        try {
+            Files.copy(new File("src/test/resources/default/" + fileName + ".txt"),
+                    new File("src/test/resources/import/" + fileName + ".txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void waitForService(ScheduledExecutorService service) throws InterruptedException {
+        Thread.sleep(50);
+        service.shutdown();
     }
 }

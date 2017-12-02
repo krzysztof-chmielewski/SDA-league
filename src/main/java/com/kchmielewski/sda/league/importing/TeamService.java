@@ -46,7 +46,7 @@ public class TeamService {
                 });
             }
         };
-        service.scheduleWithFixedDelay(runnable, delay, delay, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(runnable, delay, delay, TimeUnit.MILLISECONDS);
     }
 
 

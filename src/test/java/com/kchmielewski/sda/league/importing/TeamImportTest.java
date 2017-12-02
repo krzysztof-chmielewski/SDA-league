@@ -21,31 +21,31 @@ public class TeamImportTest {
 
     @Test
     public void forEmptyFileThrowsException() throws Exception {
-        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamEmptyTeamFile.txt")).isInstanceOf
+        assertThatThrownBy(() -> new TeamImport("src/test/resources/default/teamEmptyTeamFile.txt")).isInstanceOf
                 (IllegalStateException.class);
     }
 
     @Test
     public void forOneLineFileReturnsTeamWithThatLineAsAName() throws Exception {
-        TeamImport teamImport = new TeamImport("src/test/resources/import/teamWithoutPlayers.txt");
+        TeamImport teamImport = new TeamImport("src/test/resources/default/teamWithoutPlayers.txt");
         assertThat(teamImport.team().name()).isEqualTo("Liverpool FC");
     }
 
     @Test
     public void forTeamWithPlayerDataContainingLessThan2PartsThrowsException() throws Exception {
-        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamWithPlayerDataWithLessThan2Parts.txt")
+        assertThatThrownBy(() -> new TeamImport("src/test/resources/default/teamWithPlayerDataWithLessThan2Parts.txt")
         ).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     public void forTeamWithPlayerDataContainingMoreThan2PartsThrowsException() throws Exception {
-        assertThatThrownBy(() -> new TeamImport("src/test/resources/import/teamWithPlayerDataWithMoreThan2Parts.txt")
+        assertThatThrownBy(() -> new TeamImport("src/test/resources/default/teamWithPlayerDataWithMoreThan2Parts.txt")
         ).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     public void forTeamWithPlayerDataContaining2PartsTeamContainsThatPlayer() throws Exception {
-        TeamImport teamImport = new TeamImport("src/test/resources/import/teamWithPlayerDataWith2Parts.txt");
+        TeamImport teamImport = new TeamImport("src/test/resources/default/teamWithPlayerDataWith2Parts.txt");
         assertThat(teamImport.team().players()).hasSize(1).contains(new Player("Adam", "Lallana", teamImport.team()));
     }
 }
