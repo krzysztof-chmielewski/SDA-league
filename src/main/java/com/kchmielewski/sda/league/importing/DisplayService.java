@@ -1,7 +1,6 @@
-package com.kchmielewski.sda.league.display;
+package com.kchmielewski.sda.league.importing;
 
 import com.google.common.io.Files;
-import com.kchmielewski.sda.league.importing.ImportService;
 import com.kchmielewski.sda.league.model.Team;
 
 import java.io.File;
@@ -17,9 +16,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class DisplayService {
     private final String prefix = "display";
 
-    public DisplayService(ScheduledExecutorService service, ImportService importService, String displayDirectory,
+    public DisplayService(ScheduledExecutorService service, TeamService teamService, String displayDirectory,
                           String processedDirectory, String errorDirectory, int delay) {
-        checkNotNull(importService);
+        checkNotNull(teamService);
         checkNotNull(displayDirectory);
 
         Runnable runnable = () -> {
@@ -31,11 +30,11 @@ public class DisplayService {
                         List<String> lines = Files.readLines(f, Charset.defaultCharset());
                         lines.forEach(l -> {
                             try {
-                                if (!importService.teams().containsKey(l)) {
+                                if (!teamService.teams().containsKey(l)) {
                                     System.out.println("Team " + l + " does not exist");
                                     Files.move(f, new File(errorDirectory + "/" + f.getName()));
                                 } else {
-                                    Team team = importService.teams().get(l);
+                                    Team team = teamService.teams().get(l);
                                     Files.move(f, new File(processedDirectory + "/" + f.getName()));
                                     System.out.println(team);
                                     System.out.println(team.players());
@@ -50,6 +49,6 @@ public class DisplayService {
                 });
             }
         };
-        service.scheduleWithFixedDelay(runnable, 1, 1, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(runnable, delay, delay, TimeUnit.SECONDS);
     }
 }
