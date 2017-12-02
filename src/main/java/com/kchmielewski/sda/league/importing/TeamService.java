@@ -13,11 +13,11 @@ import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ImportService {
+public class TeamService {
     private final String prefix = "team";
     private final Map<String, Team> teams = new ConcurrentHashMap<>();
 
-    public ImportService(ScheduledExecutorService service, String importDirectory, String processedDirectory, String
+    public TeamService(ScheduledExecutorService service, String importDirectory, String processedDirectory, String
             errorDirectory, int delay) {
         checkNotNull(importDirectory);
         checkNotNull(processedDirectory);
