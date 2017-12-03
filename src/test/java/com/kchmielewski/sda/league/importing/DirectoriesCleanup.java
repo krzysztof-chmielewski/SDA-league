@@ -14,11 +14,11 @@ public abstract class DirectoriesCleanup {
     private final String importDirectory = "src/test/resources/import/";
     private final String processedDirectory = "src/test/resources/processed";
     private final String errorDirectory = "src/test/resources/error";
-    private final List<String> directoriesToClear = Arrays.asList(importDirectory, processedDirectory, errorDirectory);
+    private final List<String> directoriesToBeCleared = Arrays.asList(importDirectory, processedDirectory, errorDirectory);
 
     @After
     public void tearDown() throws Exception {
-        for (String directoryName : directoriesToClear) {
+        for (String directoryName : directoriesToBeCleared) {
             File directory = new File(directoryName);
             File[] files = directory.listFiles();
             if (files != null) {
@@ -53,7 +53,7 @@ public abstract class DirectoriesCleanup {
     }
 
     void waitForService(ScheduledExecutorService service) throws InterruptedException {
-        Thread.sleep(50);
+        Thread.sleep(150);
         service.shutdown();
     }
 }
