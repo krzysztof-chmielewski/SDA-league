@@ -28,6 +28,10 @@ public class DisplayService {
                 Stream.of(files).filter(f -> f.getName().startsWith(prefix)).forEach(f -> {
                     try {
                         List<String> lines = Files.readLines(f, Charset.defaultCharset());
+                        if (lines.size() == 0) {
+                            System.out.println("File " + f.getName() + " is empty.");
+                            Files.move(f, new File(errorDirectory + "/" + f.getName()));
+                        }
                         lines.forEach(l -> {
                             try {
                                 if (!teamService.teams().containsKey(l)) {
@@ -49,6 +53,6 @@ public class DisplayService {
                 });
             }
         };
-        service.scheduleWithFixedDelay(runnable, delay, delay, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(runnable, delay, delay, TimeUnit.MILLISECONDS);
     }
 }

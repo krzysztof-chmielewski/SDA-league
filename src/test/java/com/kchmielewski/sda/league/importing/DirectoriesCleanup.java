@@ -14,7 +14,8 @@ public abstract class DirectoriesCleanup {
     private final String importDirectory = "src/test/resources/import/";
     private final String processedDirectory = "src/test/resources/processed";
     private final String errorDirectory = "src/test/resources/error";
-    private final List<String> directoriesToBeCleared = Arrays.asList(importDirectory, processedDirectory, errorDirectory);
+    private final List<String> directoriesToBeCleared = Arrays.asList(importDirectory, processedDirectory,
+            errorDirectory);
 
     @After
     public void tearDown() throws Exception {
